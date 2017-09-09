@@ -1,15 +1,26 @@
 ﻿using UnityEngine;
 
-[System.Serializable]
+public class XStatement {
+	public XActor actor {get; set;} 
+	public XVerb verb {get; set;} 
+	public XObject obj {get; set;} 
 
-public class xStatement {
-	public xActor actor;
-	public xVerb verb;
-	public xObject obj;
+	public XStatement () {
+		actor = null;
+		verb = null;
+		obj = null;
+	}
 
-	public xStatement(xActor actor, xVerb verb, xObject obj) {
+	public XStatement(XActor actor, XVerb verb, XObject obj) {
 		this.actor = actor;
 		this.verb = verb;
 		this.obj = obj;
+	}
+
+	public string toJSONstring () {
+		return "{" + actor.toJSONstring() + ", " + 
+			verb.toJSONstring() + "," + 
+			obj.toJSONstring() + 
+			"}";
 	}
 }

@@ -2,14 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+public class XVerb {
+	public string id {get; set;} 
+	public string display {get; set;} 
 
-public class xVerb {
-	public string id;
-	public string display;
-
-	public xVerb (string id, string display) {
+	public XVerb (string id, string display) {
 		this.id = id;
 		this.display = display;
+	}
+
+	public string toJSONstring () {
+		return 
+			"\"verb\": {\"id\": \"" + id +
+			"\", \"display\": { \"" +
+			XAPIsettings.LANGUAGE + "\": \"" + display + "\" } }";
 	}
 }

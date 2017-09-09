@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
 
-[System.Serializable]
+public class XObject {
+	public string id {get; set;} 
+	public string name {get; set;} 
 
-public class xObject {
-	public string id;
-	public string definition;
-
-	public xObject (string id, string definition) {
+	public XObject (string id, string definition) {
 		this.id = id;
-		this.definition = definition;
+		this.name = definition;
+	}
+
+	public string toJSONstring () {
+		return "\"object\": {\"id\": \"" + id + 
+			"\",\"definition\": {\"name\": { \"" + XAPIsettings.LANGUAGE + "\": \"" +
+			name + "\" } } }";
 	}
 }

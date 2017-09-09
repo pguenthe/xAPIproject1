@@ -6,29 +6,22 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 public class XAPIhelper : MonoBehaviour {
-	void Start () {
-//		xActor actor = new xActor ("Peter Guenther", "peter.guenther@gmail.com");
-//		xVerb verb = new xVerb("http://adlnet.gov/expapi/verbs/completed", "completed");
-//		xObject obj = new xObject("http://nonsense.net", "Some Nonsense");
-//
-//		xStatement statement = new xStatement (actor, verb, obj);
-//
-//		string json = JsonUtility.ToJson (statement);
+	public static XAPIhelper instance;
 
-		string json = "{\"actor\": {\"name\": \"Sally Glider\",\"mbox\": \"mailto:sally@example.com\"}," +
-		              "\"verb\": {\"id\": \"http://adlnet.gov/expapi/verbs/experienced\",\"display\": { \"en-US\": \"experienced\" }}," +
-		              "\"object\": {\"id\": \"http://example.com/activities/solo-hang-gliding\",\"definition\": {" +
-		              "\"name\": { \"en-US\": \"Solo Hang Gliding\" }" + "} } }";
-		
-		StartCoroutine(SaveData (json));
-
+	void Start() {
+		instance = this;
 	}
 
-	IEnumerator SaveData(string json) {
-		Debug.Log ("JSON: " + json);
+	//StartCorouting is an instance method of MonoBehavior so this can't be static
+	public void SaveStatement (string json) {
+		StartCoroutine(SaveData (json));
+	}
+
+	private IEnumerator SaveData(string json) {
+//		Debug.Log ("JSON: " + json);
 
 		string auth = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(XAPIcredentials.KEY + ":" + XAPIcredentials.SECRET));
-		Debug.Log (auth);
+//		Debug.Log (auth);
 
 		using (UnityWebRequest www = UnityWebRequest.Post(XAPIcredentials.ENDPOINT, "")) {
 			//UnityWebRequest's Post method expects form data; we need to use an upload handler for the raw JSON
@@ -40,7 +33,6 @@ public class XAPIhelper : MonoBehaviour {
 			www.SetRequestHeader("Content-Type", "application/json");
 
 			Debug.Log ("Contacting server...");
-			Debug.Log (www.ToString ());
 
 			yield return www.Send();
 

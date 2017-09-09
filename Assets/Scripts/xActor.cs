@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 
-[System.Serializable]
+public class XActor  {
+	public string name {get; set;} 
+	public string mbox {get; set;} 
 
-public class xActor  {
-	public string name;
-	public string mbox;
-
-	public xActor (string name, string mbox) {
+	public XActor (string name, string mbox) {
 		this.name = name;
 		this.mbox = mbox;
+	}
+
+	public string toJSONstring() {
+		return "\"actor\": {\"name\": \"" + name + 
+			"\",\"mbox\": \"mailto:" + mbox + "\"}";
 	}
 }
