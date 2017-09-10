@@ -4,43 +4,26 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
+	public static GameManager gm;
+
+	public string activityID = "http://www.pguenther.com/activities/unity/testproj1";
+	public string activityName = "Test Project 1";
+
 	public InputField emailField;
 	public InputField nameField;
 
-	public string objectID = "http://www.pguenther.com/activities/unity/testproj1";
-	public string objectName = "Test Project 1";
+	[HideInInspector]
+	public string username = "";
 
-	void RegisterBegin () {
-		string email = emailField.text;
-		string name = nameField.text;
-		string verbID = "http://activitystrea.ms/schema/1.0/start";
-		string verbDisplay = "started";
+	[HideInInspector]
+	public string mbox = "";
 
-		XStatement stmt = new XStatement ();
-		stmt.actor = new XActor (name, email);
-		stmt.verb = new XVerb (verbID, verbDisplay);
-		stmt.obj = new XObject (objectID, objectName);
-		string json = stmt.toJSONstring();
-
-//		Debug.Log (json);
-
-		XAPIhelper.instance.SaveStatement (json);
+	void Start() {
+		gm = this;
 	}
 
-	void RegisterFinish () {
-		string email = emailField.text;
-		string name = nameField.text;
-		string verbID = "http://activitystrea.ms/schema/1.0/complete";
-		string verbDisplay = "completed";
-
-		XStatement stmt = new XStatement ();
-		stmt.actor = new XActor (name, email);
-		stmt.verb = new XVerb (verbID, verbDisplay);
-		stmt.obj = new XObject (objectID, objectName);
-		string json = stmt.toJSONstring();
-
-//		Debug.Log (json);
-
-		XAPIhelper.instance.SaveStatement (json);
+	void Update() {
+		username = nameField.text; 
+		mbox= emailField.text;
 	}
 }
